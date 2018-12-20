@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.vood.infrastructure</groupId>
-    <artifactId>infrastructureStarter</artifactId>
+    <artifactId>infrastructure-starter</artifactId>
     <version>0.0.1</version>
 
     <packaging>jar</packaging>
@@ -54,17 +54,6 @@
 
     <build>
         <plugins>
-            <!--
-                        <plugin>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-maven-plugin</artifactId>
-                            &lt;!&ndash;
-                                            <configuration>
-                                                <jvmArguments>-Dfile.encoding=UTF8 -Dspring.profiles.active="production"</jvmArguments>
-                                            </configuration>
-                            &ndash;&gt;
-                        </plugin>
-            -->
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>

@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import ru.vood.infrastructure.properties.NotificationProperties
 
-class ProdRunNotificationListener() : ApplicationListener<ContextRefreshedEvent> {
+class ProdRunNotificationListener : ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     lateinit var notificationProperties: NotificationProperties
 
