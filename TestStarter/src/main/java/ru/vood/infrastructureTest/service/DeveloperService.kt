@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 class DeveloperService {
     @Scheduled(cron = "1/1 * * * * ?")
     fun doWork() {
-        var date = LocalDateTime.now()
+        val date = LocalDateTime.now()
         println(date.toString() + " Developer Profile")
     }
 }
