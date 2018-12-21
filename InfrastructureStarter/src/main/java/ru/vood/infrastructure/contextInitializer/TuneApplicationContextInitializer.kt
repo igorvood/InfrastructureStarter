@@ -1,5 +1,7 @@
 package ru.vood.infrastructure.contextInitializer
 
+import org.reflections.Reflections
+import org.reflections.scanners.SubTypesScanner
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
@@ -7,6 +9,7 @@ import ru.vood.infrastructure.annotation.Tune
 import ru.vood.infrastructure.annotation.TuneCode
 import ru.vood.infrastructure.annotation.TuneDescription
 import ru.vood.infrastructure.annotation.TuneId
+import ru.vood.infrastructure.data.TuneData
 
 class TuneApplicationContextInitializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
     private val log = LoggerFactory.getLogger(TuneApplicationContextInitializer::class.java)
@@ -17,21 +20,24 @@ class TuneApplicationContextInitializer : ApplicationContextInitializer<Configur
         val allTypes = reflections.allTypes
         val listClass = allTypes.map { s -> Class.forName(s) }
         val classAnnotatedByTune = getClassAnnotatedBy(listClass, Tune::class.java)
+        val listOf = listOf(TuneId::class.java, TuneCode::class.java, TuneDescription::class.java)
 
         for (cl in classAnnotatedByTune) {
             val declaredFields = cl.declaredFields
             val tuneData = TuneData()
             tuneData.cl = cl
+
             for (f in declaredFields) {
-                val annotationTuneId = f.getAnnotation(TuneId::class.java)
-                val annotationTuneCode = f.getAnnotation(TuneCode::class.java)
-                val annotationTuneDescription = f.getAnnotation(TuneDescription::class.java)
-                if (tuneData.id == null && annotationTuneId != null)
-                    tuneData.id = f
-                if (tuneData.code == null && annotationTuneCode != null)
-                    tuneData.code = f
-                if (tuneData.description == null && annotationTuneDescription != null)
-                    tuneData.description = f
+                val checkedAnnotation = f.annotations.filter { annotation -> listOf.contains(annotation.javaClass) }
+                for (ca in checkedAnnotation) {
+                    if (tuneData.id == null && ca is TuneId)
+                        tuneData.id = f
+//                    else if (tuneData.id != null)
+                    if (tuneData.code == null && ca is TuneId)
+                        tuneData.code = f
+                    if (tuneData.description == null && ca is TuneDescription)
+                        tuneData.description = f
+                }
             }
             if (tuneData.cl != null && tuneData.id != null && tuneData.code != null && tuneData.description != null)
                 mapTune.put(tuneData.cl!!, tuneData)
@@ -39,16 +45,13 @@ class TuneApplicationContextInitializer : ApplicationContextInitializer<Configur
                 log.warn("- Класс ${tuneData.cl.toString()} не полностью аннтирован.")
         }
 
-        mapTune.forEach { t -> log.warn(("+ Успешно аннторированный класс ${t.key} ")) }
+        if (log.isDebugEnabled)
+            mapTune.forEach { t -> log.debug(("+ Успешно аннторированный класс ${t.key} ")) }
 
         val clazz = classAnnotatedByTune[0]
 
         println(clazz)
         val annotations = listClass[0].annotations
-
-        val kClass = TuneKT::class
-        val java = TuneKT::class.java
-
 
         val contains = annotations.map { a -> a::class.java }
 
@@ -56,7 +59,6 @@ class TuneApplicationContextInitializer : ApplicationContextInitializer<Configur
         //allTypes.forEach { s -> println(s) }
         println(contains)
         println(Tune::class.java)
-        println(TuneKT::class.java)
         println("===============================")
 
 
