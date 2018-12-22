@@ -55,8 +55,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, R> WrappedObject<R> wrapList(Page page, Function<T1, List<R>> longListFunction, T1 t1) {
         try {
-            final List<R> apply = longListFunction.apply(t1);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1));
         } catch (Exception e) {
             return getError(e);
         }
@@ -64,8 +63,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, R> WrappedObject<R> wrapList(Page page, BiFunction<T1, T2, List<R>> longListFunction, T1 t1, T2 t2) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2));
         } catch (Exception e) {
             return getError(e);
         }
@@ -73,8 +71,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, R> WrappedObject<R> wrapList(Page page, Function3<T1, T2, T3, List<R>> longListFunction, T1 t1, T2 t2, T3 t3) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3));
         } catch (Exception e) {
             return getError(e);
         }
@@ -82,8 +79,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, T4, R> WrappedObject<R> wrapList(Page page, Function4<T1, T2, T3, T4, List<R>> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3, t4);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3, t4));
         } catch (Exception e) {
             return getError(e);
         }
@@ -91,8 +87,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, T4, T5, R> WrappedObject<R> wrapList(Page page, Function5<T1, T2, T3, T4, T5, List<R>> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3, t4, t5);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3, t4, t5));
         } catch (Exception e) {
             return getError(e);
         }
@@ -100,8 +95,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, T4, T5, T6, R> WrappedObject<R> wrapList(Page page, Function6<T1, T2, T3, T4, T5, T6, List<R>> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3, t4, t5, t6);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3, t4, t5, t6));
         } catch (Exception e) {
             return getError(e);
         }
@@ -109,8 +103,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, T4, T5, T6, T7, R> WrappedObject<R> wrapList(Page page, Function7<T1, T2, T3, T4, T5, T6, T7, List<R>> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3, t4, t5, t6, t7);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3, t4, t5, t6, t7));
         } catch (Exception e) {
             return getError(e);
         }
@@ -118,8 +111,7 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <T1, T2, T3, T4, T5, T6, T7, T8, R> WrappedObject<R> wrapList(Page page, Function8<T1, T2, T3, T4, T5, T6, T7, T8, List<R>> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
         try {
-            final List<R> apply = longListFunction.apply(t1, t2, t3, t4, t5, t6, t7, t8);
-            return getOk(page, apply);
+            return getOk(page, longListFunction.apply(t1, t2, t3, t4, t5, t6, t7, t8));
         } catch (Exception e) {
             return getError(e);
         }
@@ -127,45 +119,44 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     //------------------------------------------------------
     default <R> WrappedObject<R> wrapObject(Supplier<R> longListFunction) {
-        final Function<R, R> function = q -> longListFunction.get();
-        return wrapList(function.andThen(aroundObjectByList()), null);
+        return wrapObject(NULL_PAGE, longListFunction);
+
     }
 
     default <T1, R> WrappedObject<R> wrapObject(Function<T1, R> longListFunction, T1 t1) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1);
+        return wrapObject(NULL_PAGE, longListFunction, t1);
     }
 
     default <T1, T2, R> WrappedObject<R> wrapObject(BiFunction<T1, T2, R> longListFunction, T1 t1, T2 t2) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2);
     }
 
     default <T1, T2, T3, R> WrappedObject<R> wrapObject(Function3<T1, T2, T3, R> longListFunction, T1 t1, T2 t2, T3 t3) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3);
     }
 
     default <T1, T2, T3, T4, R> WrappedObject<R> wrapObject(Function4<T1, T2, T3, T4, R> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3, t4);
     }
 
     default <T1, T2, T3, T4, T5, R> WrappedObject<R> wrapObject(Function5<T1, T2, T3, T4, T5, R> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4, t5);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3, t4, t5);
     }
 
     default <T1, T2, T3, T4, T5, T6, R> WrappedObject<R> wrapObject(Function6<T1, T2, T3, T4, T5, T6, R> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4, t5, t6);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3, t4, t5, t6);
     }
 
     default <T1, T2, T3, T4, T5, T6, T7, R> WrappedObject<R> wrapObject(Function7<T1, T2, T3, T4, T5, T6, T7, R> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4, t5, t6, t7);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3, t4, t5, t6, t7);
     }
 
     default <T1, T2, T3, T4, T5, T6, T7, T8, R> WrappedObject<R> wrapObject(Function8<T1, T2, T3, T4, T5, T6, T7, T8, R> longListFunction, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return wrapList(longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4, t5, t6, t7, t8);
+        return wrapObject(NULL_PAGE, longListFunction, t1, t2, t3, t4, t5, t6, t7, t8);
     }
 
     default <R> WrappedObject<R> wrapObject(Page page, Supplier<R> longListFunction) {
-        final Function<R, R> function = q -> longListFunction.get();
-        return wrapList(page, function.andThen(aroundObjectByList()), null);
+        return wrapList(page, first(q -> longListFunction.get()).andThen(aroundObjectByList()), null);
     }
 
     default <T1, R> WrappedObject<R> wrapObject(Page page, Function<T1, R> longListFunction, T1 t1) {
@@ -215,7 +206,6 @@ public interface WrapperForService extends BeginnerOfChainFunctionInterface {
     }
 
     default <R> WrappedObject<R> getOk(Page page, List<R> apply) {
-        //final Page page1 = page == NULL_PAGE ? null : page;
         return new WrappedObject<>(page, apply);
     }
 
