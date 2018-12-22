@@ -184,7 +184,7 @@ interface WrapperForController : BeginnerOfChainFunctionInterface {
         var errorMessages: ErrorMessage? = null
         var objectList: List<OBJ>? = null
 
-        constructor() {}
+        constructor()
 
         constructor(status: CommonStatus, context: RestContext?, errorMessages: ErrorMessage?, objectList: List<OBJ>?) {
             this.status = status

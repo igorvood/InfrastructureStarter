@@ -4,7 +4,7 @@ class PageKT {
 
     var totalRecords: Int = 0
 
-    constructor() {}
+    constructor()
 
 
     constructor(totalRecords: Int) {
