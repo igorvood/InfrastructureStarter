@@ -128,35 +128,24 @@ interface WrapperForServiceKT : BeginnerOfChainFunctionInterface {
 
     fun <T1, T2, T3, T4, T5, T6, T7, T8, R> wrapObject(page: PageKT, longListFunction: Function8<T1, T2, T3, T4, T5, T6, T7, T8, R>, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, t7: T7, t8: T8) = wrapList(page, longListFunction.andThen(aroundObjectByList()), t1, t2, t3, t4, t5, t6, t7, t8)
 
-    fun <R> aroundObjectByList(): Function<R, List<R>> {
-        return Function { r ->
-            if (r is List<*>)
-                throw RuntimeException("Класс " + r + " уже является списком,  для работы с ни необходимо использовать медоты WrapperForService.wrapList")
-            asList(r)
-        }
-    }
+    fun <R> aroundObjectByList(): Function<R, List<R>> =
+            Function { r ->
+                if (r is List<*>)
+                    throw RuntimeException("Класс $r уже является списком,  для работы с ни необходимо использовать медоты WrapperForService.wrapList")
+                asList(r)
+            }
 
     fun <R> getError(e: Exception): WrappedObject<R> {
         throw RuntimeException(e.message, e)
     }
 
-    fun <R> getOk(page: PageKT, apply: List<R>): WrappedObject<R> {
-        return WrappedObject(page, apply)
-    }
+    fun <R> getOk(page: PageKT, apply: List<R>) = WrappedObject(page, apply)
 
-    fun <R> getOk(apply: List<R>): WrappedObject<R> {
-        return WrappedObject(NULL_PAGE, apply)
-    }
+    fun <R> getOk(apply: List<R>) = getOk(NULL_PAGE, apply)
 
-    fun <R> getOk(apply: R): WrappedObject<R> {
-        return WrappedObject(NULL_PAGE, listOf(apply))
-    }
+    fun <R> getOk(apply: R) = getOk(NULL_PAGE, listOf(apply))
 
-    fun <R> getOk(page: PageKT, apply: R): WrappedObject<R> {
-        return WrappedObject(page, listOf(apply))
-    }
-
+    fun <R> getOk(page: PageKT, apply: R) = getOk(page, listOf(apply))
 
     class WrappedObject<OBJ> internal constructor(val page: PageKT, val objectList: List<OBJ>)
-
 }
