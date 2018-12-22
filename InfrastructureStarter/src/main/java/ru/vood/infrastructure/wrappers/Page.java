@@ -22,23 +22,4 @@ public class Page {
         this.totalRecords = totalRecords;
     }
 
-    /*
-     */
-    /*Номер страницы.*//*
-
-    private int numPage;
-    */
-    /*Размер страницы.*//*
-
-    private int count;
-    */
-    /*Количество страниц в результате.*//*
-
-    private int total;
-    */
-    /*Признак последней страницы.*//*
-
-    private int isLast;
-*/
-
 }

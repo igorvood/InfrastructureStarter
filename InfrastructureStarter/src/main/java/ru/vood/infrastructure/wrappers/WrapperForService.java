@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import static ru.vood.infrastructure.wrappers.Page.NULL_PAGE;
 
-public interface WrapperForService {
+public interface WrapperForService extends BeginnerOfChainFunctionInterface {
 
     default <R> WrappedObject<R> wrapList(Supplier<List<R>> longListFunction) {
         return wrapList(NULL_PAGE, o -> longListFunction.get(), null);

@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public interface WrapperForController {
+public interface WrapperForController extends BeginnerOfChainFunctionInterface {
 
     default <R> WrappedObject<R> wrapObject(Supplier<WrapperForService.WrappedObject<R>> longListFunction) {
         try {
