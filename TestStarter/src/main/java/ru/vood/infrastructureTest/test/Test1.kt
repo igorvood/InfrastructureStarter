@@ -6,6 +6,7 @@ import ru.vood.infrastructure.wrappers.WrapperForService
 class Test1 : WrapperForService {
 
     fun q() {
+        listOf<String>("1")
         val h = HashMap<Long, String>()
         val put = h.put(1L, "2")
         //val kFunction1 = this::class.java::s

@@ -2,7 +2,7 @@ package ru.vood.infrastructure.wrappers;
 
 public class Page {
 
-    public static Page NULL_PAGE = new Page();
+    public static final Page NULL_PAGE = new Page();
 
     private int totalRecords;
 
